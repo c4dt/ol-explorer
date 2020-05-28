@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '@c4dt/dynacred';
-import { ByzCoinService } from 'src/app/byz-coin.service';
+import { ByzCoinService } from './byz-coin.service';
 
 @Injectable({
   providedIn: 'root',

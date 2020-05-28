@@ -13,8 +13,8 @@ import CredentialsInstance, { CredentialStruct } from '@dedis/cothority/personho
 import { SkipBlock } from '@dedis/cothority/skipchain';
 import SkipchainRPC from '@dedis/cothority/skipchain/skipchain-rpc';
 import { AddressBook } from '@c4dt/dynacred';
-import { ByzCoinService } from 'src/app/byz-coin.service';
-import { UserService } from 'src/app/user.service';
+import { ByzCoinService } from '../byz-coin.service';
+import { UserService } from '../user.service';
 
 @Component({
     selector: 'app-bcviewer',

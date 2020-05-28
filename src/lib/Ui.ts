@@ -10,7 +10,7 @@ import Log from '@dedis/cothority/log';
 
 import { IUpdateCredential } from '@c4dt/dynacred';
 
-import { UserService } from 'src/app/user.service';
+import { UserService } from '../app/user.service';
 import { DialogTransactionComponent } from './dialog-transaction';
 
 // Progress type to be used in showTransactions.

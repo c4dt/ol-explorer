@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { IdentityWrapper } from '@dedis/cothority/darc';
 import Log from '@dedis/cothority/log';
 
-import { ByzCoinService } from 'src/app/byz-coin.service';
-import { showDialogOKC } from 'src/lib/Ui';
+import { ByzCoinService } from './byz-coin.service';
+import { showDialogOKC } from '../lib/Ui';
 import { version } from '../../package.json';
 
 @Component({
