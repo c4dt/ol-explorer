@@ -24,6 +24,22 @@
       "@c4dt/dynacred": [
         "src/lib/dynacred",
         "node_modules/@c4dt/dynacred"
+      ],
+      "@dedis/cothority": [
+        "src/lib/cothority",
+        "node_modules/@dedis/cothority"
+      ],
+      "@dedis/cothority/*": [
+        "src/lib/cothority/*",
+        "node_modules/@dedis/cothority/*"
+      ],
+      "@dedis/kyber": [
+        "src/lib/kyber",
+        "node_modules/@dedis/kyber"
+      ],
+      "@dedis/kyber/*": [
+        "src/lib/kyber/*",
+        "node_modules/@dedis/kyber/*"
       ]
     }
   },
