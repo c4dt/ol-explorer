@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -11,10 +12,33 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "target": "es5",
+    "paths": {
+      "@c4dt/dynacred-c4dt": [
+        "src/lib/dynacred",
+        "node_modules/@c4dt/dynacred-c4dt"
+      ],
+      "@c4dt/dynacred-c4dt/*": [
+        "src/lib/dynacred/*",
+        "node_modules/@c4dt/dynacred-c4dt/*"
+      ],
+      "@c4dt/cothority": [
+        "src/lib/cothority",
+        "node_modules/@c4dt/cothority"
+      ],
+      "@c4dt/cothority/*": [
+        "src/lib/cothority/*",
+        "node_modules/@c4dt/cothority/*"
+      ],
+      "@dedis/kyber": [
+        "src/lib/kyber",
+        "node_modules/@dedis/kyber"
+      ],
+      "@dedis/kyber/*": [
+        "src/lib/kyber/*",
+        "node_modules/@dedis/kyber/*"
+      ],
+    },
     "lib": [
       "es2018",
       "dom"
