@@ -7,7 +7,6 @@ import Log from '@dedis/cothority/log';
 
 import { ByzCoinService } from './byz-coin.service';
 import { showDialogOKC } from '../lib/Ui';
-import { version } from '../../package.json';
 
 @Component({
     selector: 'app-root',
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
     text: string;
     percentage: number;
     bcviewer = false;
-    version = version;
+    version = 'unknown';
 
     constructor(
         private router: Router,
