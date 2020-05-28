@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import Log from '@dedis/cothority/log';
 
-import { IUpdateCredential } from './dynacred';
+import { IUpdateCredential } from '@c4dt/dynacred';
 
 import { UserService } from '../app/user.service';
 import { DialogTransactionComponent } from './dialog-transaction';

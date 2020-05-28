@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../lib/dynacred';
+import { User } from '@c4dt/dynacred';
 import { ByzCoinService } from './byz-coin.service';
 
 @Injectable({

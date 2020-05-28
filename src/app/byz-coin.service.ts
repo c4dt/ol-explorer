@@ -6,7 +6,7 @@ import { SkipBlock, SkipchainRPC } from '@dedis/cothority/skipchain';
 import { StatusRequest, StatusResponse } from '@dedis/cothority/status/proto';
 import StatusRPC from '@dedis/cothority/status/status-rpc';
 import Dexie from 'dexie';
-import { Fetcher, User } from '../lib/dynacred';
+import { Fetcher, User } from '@c4dt/dynacred';
 import { Config } from '../lib/config';
 
 @Injectable({

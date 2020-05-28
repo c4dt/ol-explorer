@@ -12,7 +12,7 @@ import TxResult from '@dedis/cothority/byzcoin/proto/tx-result';
 import CredentialsInstance, { CredentialStruct } from '@dedis/cothority/personhood/credentials-instance';
 import { SkipBlock } from '@dedis/cothority/skipchain';
 import SkipchainRPC from '@dedis/cothority/skipchain/skipchain-rpc';
-import { AddressBook } from '../../lib/dynacred';
+import { AddressBook } from '@c4dt/dynacred';
 import { ByzCoinService } from '../byz-coin.service';
 import { UserService } from '../user.service';
 

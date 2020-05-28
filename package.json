@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
+    "@c4dt/dynacred": "^2.0.0",
     "@dedis/cothority": "^3.4.5-p2005.2210.1948.0",
     "@dedis/kyber": "^3.4.3-p2005.2210.1945.0",
     "dexie": "^3.0.1",
