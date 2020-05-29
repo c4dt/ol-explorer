@@ -3,10 +3,15 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {Router} from '@angular/router';
 
 import {IdentityWrapper} from '@c4dt/cothority/darc';
-import Log from '@c4dt/cothority/log';
+import {Log} from '@c4dt/cothority';
 
 import {ByzCoinService} from './byz-coin.service';
-import {showDialogOKC} from '../lib/Ui';
+import {showDialogOKC, showTransactions, TProgress} from '../lib/Ui';
+
+// deviceURL - create a new device in https://demo.c4dt.org/omniledger/admin/device and copy
+// it here.
+// This ends with 'f' usually
+let deviceURL = "https://demo.c4dt.org/omniledger/register/device?credentialIID=3054c27102d58a0e4b047d59917e2ac7fd0cdc3bd7ef0e6649d61d905c2a440a&ephemeral=22f8fed68b65582e8d5676d0bf42055f568fc3ca3a04b15be0a2f9aa4038660f";
 
 @Component({
     selector: 'app-root',
@@ -53,17 +58,19 @@ export class AppComponent implements OnInit {
 
         this.logAppend('Checking if user exists', 20);
         if (!(await this.bcs.hasUser())) {
-            this.logAppend('Checking if we can migrate', 30);
-            try {
-                await this.bcs.migrate();
-            } catch (e) {
-                // No data saved - show how to get a new user
-                Log.catch(e, 'couldn\'t migrate data');
-                this.loading = false;
+            Log.print("no user");
+            if (deviceURL === "") {
+                Log.print("show new user");
                 return this.newUser();
+            } else {
+                await showTransactions(this.dialog, "Attaching to existing user",
+                    async (progress: TProgress) => {
+                        Log.lvl = 5;
+                        progress(50, "Attaching new device");
+                        this.bcs.user = await this.bcs.retrieveUserByURL(deviceURL);
+                    });
+                await this.router.navigate(["/"]);
             }
-            this.logAppend('Migration successful, reloading', 100);
-            setTimeout(() => this.ngOnInit(), 1000);
         } else {
             try {
                 this.logAppend('Loading data', 80);
@@ -98,6 +105,7 @@ export class AppComponent implements OnInit {
     }
 
     async newUser(): Promise<boolean> {
+        this.loading = false;
         return this.router.navigate(['/newuser']);
     }
 }

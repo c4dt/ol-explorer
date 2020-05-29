@@ -12,6 +12,7 @@ import { DemoMaterialModule } from '../material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogTransactionComponent } from '../lib/dialog-transaction';
 import {NewuserComponent} from "./newuser/newuser.component";
+import { HandsonComponent } from './handson/handson.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {NewuserComponent} from "./newuser/newuser.component";
       RetryLoadComponent,
       DialogTransactionComponent,
       NewuserComponent,
+      HandsonComponent,
   ],
   imports: [
     AppRoutingModule,

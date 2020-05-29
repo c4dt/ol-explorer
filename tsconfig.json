@@ -16,7 +16,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@c4dt/dynacred-c4dt": [
+        "src/lib/dynacred",
+        "node_modules/@c4dt/dynacred-c4dt"
+      ],
+      "@c4dt/dynacred-c4dt/*": [
+        "src/lib/dynacred/*",
+        "node_modules/@c4dt/dynacred-c4dt/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
