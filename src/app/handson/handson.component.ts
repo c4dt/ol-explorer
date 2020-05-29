@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ByzCoinService} from "../byz-coin.service";
 import {UserService} from "../user.service";
+import * as Long from "long";
 
 @Component({
   selector: 'app-handson',
@@ -19,7 +20,9 @@ export class HandsonComponent implements OnInit {
     this.logLines += `${text.join(" ")}\n`
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.log("Welcome user", this.user.credStructBS.credPublic.alias.getValue());
+    // this.log("Credits:", this.user.coinBS.getValue().value);
+    // await this.user.executeTransactions((tx) => this.user.coinBS.transferCoins(tx, Buffer.from("some address"), Long.fromNumber(100)));
   }
 }
