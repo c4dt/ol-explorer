@@ -28,11 +28,7 @@ export class ByzCoinService extends Fetcher {
 
     async loadConfig(logger: (msg: string, percentage: number) => void): Promise<void> {
         logger('Loading config', 0);
-        const res = await fetch('assets/config.toml');
-        if (!res.ok) {
-            return Promise.reject(`fetching config gave: ${res.status}: ${res.body}`);
-        }
-        this.config = Config.fromTOML(await res.text());
+        this.config = Config.fromTOML(Config.dedis_config);
         logger('Pinging nodes', 10);
         this.conn = new RosterWSConnection(this.config.roster, StatusRPC.serviceName);
         this.conn.setParallel(this.config.roster.length);
