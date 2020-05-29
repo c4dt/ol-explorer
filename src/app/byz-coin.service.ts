@@ -13,6 +13,7 @@ import { Config } from '../lib/config';
     providedIn: 'root',
 })
 export class ByzCoinService extends Fetcher {
+    skipchain: SkipchainRPC;
     user?: User;
     config?: Config;
     conn?: RosterWSConnection;
@@ -40,9 +41,7 @@ export class ByzCoinService extends Fetcher {
         this.conn.setParallel(1);
         logger('Fetching latest block', 70);
         this.db = new StorageDB();
-        const sc = new SkipchainRPC(this.conn);
-        // @ts-ignore
-        global.sc = sc;
+        this.skipchain = new SkipchainRPC(this.conn);
         // @ts-ignore
         global.bcs = this;
         try {
@@ -52,7 +51,7 @@ export class ByzCoinService extends Fetcher {
                 latest = SkipBlock.decode(latestBuf);
                 Log.lvl2('Loaded latest block from db:', latest.index);
             } else {
-                latest = await sc.getSkipBlock(this.idKnown);
+                latest = await this.skipchain.getSkipBlock(this.idKnown);
                 Log.lvl2('Got known skipblock');
             }
             this.bc = await ByzCoinRPC.fromByzcoin(this.conn, this.config.byzCoinID,

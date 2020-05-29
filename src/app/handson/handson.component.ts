@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ByzCoinService} from "../byz-coin.service";
 import {UserService} from "../user.service";
+import {Log} from "@c4dt/cothority";
 import * as Long from "long";
 
 @Component({
@@ -16,13 +17,15 @@ export class HandsonComponent implements OnInit {
       public user: UserService,
   ) { }
 
-  log(...text: string[]){
-    this.logLines += `${text.join(" ")}\n`
+  log(...args: any){
+    const bufs = args.map((a) => Buffer.isBuffer(a) ? a.toString('hex') : a);
+    this.logLines += `${Log.joinArgs(bufs)}\n`
   }
 
   async ngOnInit() {
     this.log("Welcome user", this.user.credStructBS.credPublic.alias.getValue());
-    // this.log("Credits:", this.user.coinBS.getValue().value);
-    // await this.user.executeTransactions((tx) => this.user.coinBS.transferCoins(tx, Buffer.from("some address"), Long.fromNumber(100)));
+    this.log("Credits:", this.user.coinBS.getValue().value);
+    await this.user.executeTransactions((tx) => this.user.coinBS.transferCoins(tx,
+    Buffer.from("722b25091d1bc4466a39b238b83b199a3726f28095a09f299243e5a95a9c790d", "hex"), Long.fromNumber(100)));
   }
 }

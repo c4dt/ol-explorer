@@ -13,10 +13,6 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
     "paths": {
       "@c4dt/dynacred-c4dt": [
         "src/lib/dynacred",
@@ -26,7 +22,11 @@
         "src/lib/dynacred/*",
         "node_modules/@c4dt/dynacred-c4dt/*"
       ]
-    }
+    },
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

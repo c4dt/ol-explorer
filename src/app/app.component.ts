@@ -10,7 +10,7 @@ import {showDialogOKC, showTransactions, TProgress} from '../lib/Ui';
 
 // deviceURL - create a new device in https://demo.c4dt.org/omniledger/admin/device and copy
 // it here.
-let deviceURL = "";
+let deviceURL = "https://demo.c4dt.org/omniledger/register/device?credentialIID=3054c27102d58a0e4b047d59917e2ac7fd0cdc3bd7ef0e6649d61d905c2a440a&ephemeral=9bbe9fc44b7e5d910b74a9decb24d23631aa07e3aadeae47fd40a5c8a88cf20c";
 
 @Component({
     selector: 'app-root',
@@ -64,7 +64,6 @@ export class AppComponent implements OnInit {
             } else {
                 await showTransactions(this.dialog, "Attaching to existing user",
                     async (progress: TProgress) => {
-                        Log.lvl = 5;
                         progress(50, "Attaching new device");
                         this.bcs.user = await this.bcs.retrieveUserByURL(deviceURL);
                     });
