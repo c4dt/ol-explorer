@@ -11,6 +11,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DemoMaterialModule } from '../material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogTransactionComponent } from '../lib/dialog-transaction';
+import {NewuserComponent} from "./newuser/newuser.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { DialogTransactionComponent } from '../lib/dialog-transaction';
       DialogOKCancelComponent,
       RetryLoadComponent,
       DialogTransactionComponent,
+      NewuserComponent,
   ],
   imports: [
     AppRoutingModule,

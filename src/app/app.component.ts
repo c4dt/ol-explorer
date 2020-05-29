@@ -1,12 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
-import { IdentityWrapper } from '@c4dt/cothority/darc';
+import {IdentityWrapper} from '@c4dt/cothority/darc';
 import Log from '@c4dt/cothority/log';
 
-import { ByzCoinService } from './byz-coin.service';
-import { showDialogOKC } from '../lib/Ui';
+import {ByzCoinService} from './byz-coin.service';
+import {showDialogOKC} from '../lib/Ui';
 
 @Component({
     selector: 'app-root',
@@ -50,12 +50,6 @@ export class AppComponent implements OnInit {
 
         Log.lvl2('Starting to update blocks for viewer');
         this.bcviewer = true;
-
-        if (window.location.pathname.match(/\/register(\/device)?/)) {
-            Log.lvl2('allowing registering with unknown Data');
-            this.loading = false;
-            return;
-        }
 
         this.logAppend('Checking if user exists', 20);
         if (!(await this.bcs.hasUser())) {
@@ -104,12 +98,7 @@ export class AppComponent implements OnInit {
     }
 
     async newUser(): Promise<boolean> {
-        const roster = this.bcs.bc.getConfig().roster;
-        if (roster && !roster.list[0].address.includes('localhost')) {
-            return this.router.navigate(['/newuser']);
-        } else {
-            return this.router.navigate(['/register']);
-        }
+        return this.router.navigate(['/newuser']);
     }
 }
 
