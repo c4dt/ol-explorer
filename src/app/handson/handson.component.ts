@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ByzCoinService} from "src/app/byz-coin.service";
-import {UserService} from "src/app/user.service";
+import {ByzCoinService} from "../byz-coin.service";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-handson',
