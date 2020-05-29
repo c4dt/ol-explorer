@@ -7,7 +7,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import Log from '@dedis/cothority/log';
+import Log from '@c4dt/cothority/log';
 import { Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ByzCoinService } from '../app/byz-coin.service';

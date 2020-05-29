@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ByzCoinRPC, IStorage } from '@dedis/cothority/byzcoin';
-import Log from '@dedis/cothority/log';
-import { RosterWSConnection } from '@dedis/cothority/network';
-import { SkipBlock, SkipchainRPC } from '@dedis/cothority/skipchain';
-import { StatusRequest, StatusResponse } from '@dedis/cothority/status/proto';
-import StatusRPC from '@dedis/cothority/status/status-rpc';
+import { ByzCoinRPC, IStorage } from '@c4dt/cothority/byzcoin';
+import Log from '@c4dt/cothority/log';
+import { RosterWSConnection } from '@c4dt/cothority/network';
+import { SkipBlock, SkipchainRPC } from '@c4dt/cothority/skipchain';
+import { StatusRequest, StatusResponse } from '@c4dt/cothority/status/proto';
+import StatusRPC from '@c4dt/cothority/status/status-rpc';
 import Dexie from 'dexie';
-import { Fetcher, User } from '@c4dt/dynacred';
+import { Fetcher, User } from '@c4dt/dynacred-c4dt';
 import { Config } from '../lib/config';
 
 @Injectable({
