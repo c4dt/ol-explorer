@@ -207,9 +207,11 @@ export class Fetcher {
     async retrieveDarcBS(darcID: BehaviorSubject<InstanceID> | InstanceID):
         Promise<DarcBS | undefined> {
         Log.lvl3("getting darcBS");
+        Log.print(darcID, darcID instanceof Buffer, "writeUInt8" in darcID);
         // Need to verify against Buffer here, which is the defined type of InstanceID.
         // Else typescript complains....
-        if (darcID instanceof Buffer) {
+        if ("writeUInt8" in darcID) {
+            Log.print("making behaviorSubject");
             darcID = new BehaviorSubject(darcID);
         }
         const instObs = darcID.pipe(

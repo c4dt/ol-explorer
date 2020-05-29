@@ -10,8 +10,7 @@ import {showDialogOKC, showTransactions, TProgress} from '../lib/Ui';
 
 // deviceURL - create a new device in https://demo.c4dt.org/omniledger/admin/device and copy
 // it here.
-// This ends with 'f' usually
-let deviceURL = "https://demo.c4dt.org/omniledger/register/device?credentialIID=3054c27102d58a0e4b047d59917e2ac7fd0cdc3bd7ef0e6649d61d905c2a440a&ephemeral=22f8fed68b65582e8d5676d0bf42055f568fc3ca3a04b15be0a2f9aa4038660f";
+let deviceURL = "";
 
 @Component({
     selector: 'app-root',
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit {
                         progress(50, "Attaching new device");
                         this.bcs.user = await this.bcs.retrieveUserByURL(deviceURL);
                     });
-                await this.router.navigate(["/"]);
+                return this.router.navigate(["/handson"]);
             }
         } else {
             try {

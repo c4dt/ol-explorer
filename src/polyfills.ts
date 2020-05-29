@@ -68,4 +68,4 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
     browser: true,
 };
 
-global.Buffer = global.Buffer || require('safe-buffer').Buffer;
+global.Buffer = global.Buffer || require('buffer').Buffer;
