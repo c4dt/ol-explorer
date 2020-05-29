@@ -33,6 +33,9 @@ import {NewuserComponent} from "./newuser/newuser.component";
     ReactiveFormsModule,
     MatDialogModule,
   ],
+  entryComponents: [
+    ShowBlockComponent,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

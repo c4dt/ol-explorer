@@ -1,20 +1,20 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import * as Long from 'long';
-import { sprintf } from 'sprintf-js';
+import {sprintf} from 'sprintf-js';
 
-import { ByzCoinRPC, InstanceID, Instruction } from '@c4dt/cothority/byzcoin';
+import {ByzCoinRPC, Instruction} from '@c4dt/cothority/byzcoin';
 import Instance from '@c4dt/cothority/byzcoin/instance';
 import Proof from '@c4dt/cothority/byzcoin/proof';
 import DataBody from '@c4dt/cothority/byzcoin/proto/data-body';
 import DataHeader from '@c4dt/cothority/byzcoin/proto/data-header';
 import TxResult from '@c4dt/cothority/byzcoin/proto/tx-result';
-import CredentialsInstance, { CredentialStruct } from '@c4dt/cothority/personhood/credentials-instance';
-import { SkipBlock } from '@c4dt/cothority/skipchain';
+import CredentialsInstance, {CredentialStruct} from '@c4dt/cothority/personhood/credentials-instance';
+import {SkipBlock} from '@c4dt/cothority/skipchain';
 import SkipchainRPC from '@c4dt/cothority/skipchain/skipchain-rpc';
-import { AddressBook } from '@c4dt/dynacred-c4dt';
-import { ByzCoinService } from '../byz-coin.service';
-import { UserService } from '../user.service';
+import {Fetcher} from '@c4dt/dynacred-c4dt';
+import {ByzCoinService} from '../byz-coin.service';
+import {Log} from "@c4dt/cothority";
 
 @Component({
     selector: 'app-bcviewer',
@@ -90,16 +90,15 @@ export class ShowBlockComponent {
     constructor(
         private dialogRef: MatDialogRef<ShowBlockComponent>,
         private bcs: ByzCoinService,
-        private user: UserService,
         @Inject(MAT_DIALOG_DATA) public data: BCBlock) {
         this.updateVars();
         data.updateLinks();
     }
 
-    updateVars() {
+    async updateVars() {
         this.roster = this.data.sb.roster.list.slice(1).map((l) => l.description);
-        this.ctxs = this.data.body.txResults.map((txr, index) =>
-            new TxStr(this.user.addressBook, txr, index));
+        this.ctxs = await Promise.all(this.data.body.txResults.map((txr, index) =>
+            TxStr.fromFetcher(this.bcs, txr, index)));
     }
 
     async goBlock(id: Buffer) {
@@ -111,13 +110,13 @@ export class ShowBlockComponent {
 }
 
 class TxStr {
-    instructions: InstStr[];
-    accepted: boolean;
+    constructor(public instructions: InstStr[], public index: number, public accepted: boolean) {
+    }
 
-    constructor(address: AddressBook, tx: TxResult, public index: number) {
-        this.instructions = tx.clientTransaction.instructions.map((inst, ind) =>
-            new InstStr(address, inst, ind));
-        this.accepted = tx.accepted;
+    static async fromFetcher(f: Fetcher, tx: TxResult, index: number): Promise<TxStr>{
+        const insts = await Promise.all(tx.clientTransaction.instructions
+            .map((inst, ind) => InstStr.fromFetcher(f, inst, ind)));
+        return new TxStr(insts, index, tx.accepted);
     }
 }
 
@@ -126,9 +125,8 @@ class InstStr {
     args: string[];
     contractID: string;
     command: string;
-    description: string | undefined;
 
-    constructor(address: AddressBook, public inst: Instruction, public index: number) {
+    constructor(public inst: Instruction, public index: number, public description?: string) {
         switch (inst.type) {
             case 0:
                 this.type = 'spawn';
@@ -141,28 +139,34 @@ class InstStr {
                 this.args = inst.invoke.args.map((arg) => arg.name);
                 this.contractID = inst.invoke.contractID;
                 this.command = inst.invoke.command;
-                this.description = this.getDescription(address, inst.instanceID);
                 break;
             case 2:
                 this.type = 'delete';
                 this.contractID = inst.delete.contractID;
-                this.description = this.getDescription(address, inst.instanceID);
                 break;
         }
     }
 
-    getDescription(address: AddressBook, id: InstanceID): string {
-        switch (this.contractID) {
-            case 'config':
-                return 'Genesis Configuration';
-            case CredentialsInstance.contractID:
-                const cred = address.contacts.getValue().find((c) => c.id.equals(id));
-                if (cred) {
-                    return `Credential '${cred.credPublic.alias.getValue()}'`;
-                }
-                return 'Unknown Credential';
+    static async fromFetcher(bc: Fetcher, inst: Instruction, index: number): Promise<InstStr> {
+        const is = new InstStr(inst, index);
+        if (inst.type > 0) {
+            switch (is.contractID) {
+                case 'config':
+                    is.description = 'Genesis Configuration';
+                    break;
+                case CredentialsInstance.contractID:
+                    is.description = "Unknown credential";
+                    try {
+                        const cred = await bc.retrieveCredentialStructBS(inst.instanceID);
+                        if (cred) {
+                            is.description = `Credential '${cred.credPublic.alias.getValue()}'`;
+                        }
+                    } catch (e) {
+                        is.description = "Error while retrieving credential";
+                    }
+            }
         }
-        return this.contractID;
+        return is;
     }
 }
 
