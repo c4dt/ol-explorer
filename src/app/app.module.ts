@@ -37,6 +37,7 @@ import { HandsonComponent } from './handson/handson.component';
   ],
   entryComponents: [
     ShowBlockComponent,
+    DialogTransactionComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
