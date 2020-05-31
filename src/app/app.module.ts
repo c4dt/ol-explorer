@@ -13,7 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogTransactionComponent } from '../lib/dialog-transaction';
 import {NewuserComponent} from "./newuser/newuser.component";
 import { HandsonComponent } from './handson/handson.component';
-import {HandsonInputComponent} from "src/app/handson/input";
+import {HandsonInputComponent} from "./handson/input";
 
 @NgModule({
   declarations: [

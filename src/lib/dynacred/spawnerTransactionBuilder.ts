@@ -21,7 +21,7 @@ import {TransactionBuilder} from "./byzcoin";
 import {EAttributesPublic, ECredentials} from "./credentialStructBS";
 import {ICoin} from "./genesis";
 import {UserSkeleton} from "./userSkeleton";
-import {TProgress} from "src/lib/Ui";
+import {TProgress} from "../Ui";
 
 /**
  * SpawnerTransactionBuilder offers an easy interface to create new instances

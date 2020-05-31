@@ -4,7 +4,7 @@ import {UserService} from "../user.service";
 import * as Long from "long";
 import {MatDialog} from "@angular/material/dialog";
 import {Calypso, CalypsoData} from "@c4dt/dynacred-c4dt/index";
-import {HandsonHelpers} from "src/app/handson/handson-helpers";
+import {HandsonHelpers} from "./handson-helpers";
 import {CalypsoReadInstance, CalypsoWriteInstance} from "@c4dt/cothority/calypso";
 import {Instance} from "@c4dt/cothority/byzcoin";
 

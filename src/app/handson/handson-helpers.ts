@@ -1,14 +1,14 @@
-import {ByzCoinService} from "src/app/byz-coin.service";
-import {UserService} from "src/app/user.service";
+import {ByzCoinService} from "../byz-coin.service";
+import {UserService} from "../user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {Log} from "@c4dt/cothority/index";
 import {DarcBS} from "@c4dt/dynacred-c4dt/byzcoin";
 import {AddressBook} from "@c4dt/dynacred-c4dt/addressBook";
 import {Darc} from "@c4dt/cothority/darc";
 import {SpawnerTransactionBuilder} from "@c4dt/dynacred-c4dt/spawnerTransactionBuilder";
-import {showTransactions, TProgress} from "src/lib/Ui";
-import {HandsonInputComponent} from "src/app/handson/input";
-import {BCBlock} from "src/app/bcviewer/bcviewer.component";
+import {showTransactions, TProgress} from "../../lib/Ui";
+import {HandsonInputComponent} from "./input";
+import {BCBlock} from "../bcviewer/bcviewer.component";
 
 export class HandsonHelpers {
     logLines = "";
