@@ -1,6 +1,6 @@
 import {Component, Inject} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Log} from "@c4dt/cothority/index";
+import {Log} from "@c4dt/cothority";
 
 interface IInput {
     title: string;

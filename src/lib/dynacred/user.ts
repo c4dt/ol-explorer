@@ -6,7 +6,7 @@ import { Darc, IdentityDarc, SignerEd25519 } from "@c4dt/cothority/darc";
 import { Scalar } from "@dedis/kyber";
 
 import { LongTermSecret } from "@c4dt/cothority/calypso";
-import { Log } from "@c4dt/cothority/index";
+import { Log } from "@c4dt/cothority";
 import { AddressBook } from "./addressBook";
 import { CoinBS } from "./byzcoin/coinBS";
 import { DarcBS } from "./byzcoin/darcsBS";

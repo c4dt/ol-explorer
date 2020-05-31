@@ -12,7 +12,7 @@ import {
 } from "@c4dt/cothority/byzcoin/contracts";
 import {AddTxResponse} from "@c4dt/cothority/byzcoin/proto/requests";
 import {Darc, IIdentity, Rule} from "@c4dt/cothority/darc";
-import {Log} from "@c4dt/cothority/index";
+import {Log} from "@c4dt/cothority";
 
 import {CalypsoReadInstance, CalypsoWriteInstance, Read, Write} from "@c4dt/cothority/calypso";
 import {Point} from "@dedis/kyber/index";

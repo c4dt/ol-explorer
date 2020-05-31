@@ -7,7 +7,7 @@ import {createCipheriv, randomBytes, createDecipheriv} from "crypto-browserify";
 import {CredentialInstanceMapBS} from "./credentialStructBS";
 import {KeyPair} from "./keypair";
 import {SpawnerTransactionBuilder} from "./spawnerTransactionBuilder";
-import {Log} from "@c4dt/cothority/index";
+import {Log} from "@c4dt/cothority";
 
 export class Calypso {
     constructor(
