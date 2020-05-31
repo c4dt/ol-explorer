@@ -66,8 +66,13 @@ export class AppComponent implements OnInit {
                     async (progress: TProgress) => {
                         progress(50, "Attaching new device");
                         this.bcs.user = await this.bcs.retrieveUserByURL(deviceURL);
+
+                        progress(70, "Updating LTSID");
+                        await this.bcs.user.executeTransactions((tx) => {
+                            this.bcs.user.credStructBS.credConfig.ltsID.setValue(tx, this.bcs.config.ltsID);
+                        }, 10);
                     });
-                return this.router.navigate(["/handson"]);
+                return window.location.reload();
             }
         } else {
             try {

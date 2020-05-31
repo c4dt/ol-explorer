@@ -124,5 +124,10 @@
   "defaultProject": "ol-training",
   "cli": {
     "analytics": "b5d40341-07a4-4ca4-8f3b-51af44456b01"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

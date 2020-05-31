@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogTransactionComponent } from '../lib/dialog-transaction';
 import {NewuserComponent} from "./newuser/newuser.component";
 import { HandsonComponent } from './handson/handson.component';
+import {HandsonInputComponent} from "src/app/handson/input";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HandsonComponent } from './handson/handson.component';
       DialogTransactionComponent,
       NewuserComponent,
       HandsonComponent,
+      HandsonInputComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -38,6 +40,7 @@ import { HandsonComponent } from './handson/handson.component';
   entryComponents: [
     ShowBlockComponent,
     DialogTransactionComponent,
+    HandsonInputComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

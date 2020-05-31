@@ -1,0 +1,137 @@
+.window {
+  position: relative;
+  width: 600px;
+  height: 480px;
+}
+
+.error {
+  background-color: orangered;
+  padding: 10px;
+  margin: 10px;
+}
+
+.hidden {
+  width: 0;
+  height: 0;
+}
+
+.client {
+  position: absolute;
+  top: 104px;
+  width: 64px;
+  height: 64px;
+}
+
+.cothority {
+  position: absolute;
+  top: 0;
+  left: 314.6666666667px;
+  width: 128px;
+  height: 128px;
+}
+
+.progress-box {
+  position: absolute;
+  top: 456px;
+  height: 24px;
+  width: 600px;
+  border: 1px solid black;
+}
+
+.progress-bar {
+  height: 24px;
+  background-color: #ccffcc;
+  text-align: center;
+}
+
+.transaction {
+  position: absolute;
+  border: 1px solid black;
+  width: 72px;
+  height: 72px;
+  padding: 4px;
+  background-color: #fffffff0;
+  z-index: 1;
+}
+
+.block {
+  position: absolute;
+  width: 64px;
+  height: 24px;
+  left: 520px;
+  padding-top: 8px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.tx-send {
+  top: 200px;
+  left: 64px;
+  animation: tx-send 1s both;
+}
+
+.tx-block {
+  top: 24px;
+  left: 338.6666666667px;
+  animation: tx-block 1s both;
+}
+
+.block1 {
+  top: 48px;
+  animation: block-in 1s both;
+}
+
+.block2 {
+  top: 48px;
+  animation: block-move-2 1s both;
+}
+
+.block3 {
+  top: 112px;
+  animation: block-move-3 1s both;
+}
+
+.block4 {
+  top: 176px;
+  animation: block-out 1s both;
+}
+
+@keyframes tx-send {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+  }
+  100% {
+    transform: translate(274.6666666667px, -176px) scale(1);
+  }
+}
+@keyframes tx-block {
+  100% {
+    transform: translate(181.3333333333px, 0px) scale(0);
+  }
+}
+@keyframes block-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes block-move-2 {
+  100% {
+    transform: translateY(64px);
+  }
+}
+@keyframes block-move-3 {
+  100% {
+    transform: translateY(64px);
+  }
+}
+@keyframes block-out {
+  100% {
+    transform: translateY(64px);
+    opacity: 0;
+  }
+}
+
+/*# sourceMappingURL=dialog-transaction.css.map */

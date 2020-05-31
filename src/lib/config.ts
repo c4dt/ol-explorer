@@ -36,14 +36,13 @@ export class Config {
         return new Config(
             getField("ByzCoinID", asID),
             Roster.fromTOML(raw),
-            tryToGetField("AdminDarcID", asID),
-            tryToGetField("Ephemeral", asID),
+            getField("LTSID", asID)
         );
     }
     
     static dedis_config = `
 ByzCoinID = "9cc36071ccb902a1de7e0d21a2c176d73894b1cf88ae4cc2ba4c95cd76f474f3"
-LTSID = "fd3a13fc870b829bcd3186d2a7e3f330832425fb0e977aaa141fbc526f470cc7"
+LTSID = "0bf81dc36e60be3db113016400f7942e54769ceb8e9d93cafff08548e181a4f9"
 
 [[servers]]
   Address = "tls://conode.c4dt.org:7770"
@@ -133,9 +132,6 @@ LTSID = "fd3a13fc870b829bcd3186d2a7e3f330832425fb0e977aaa141fbc526f470cc7"
     private constructor(
         readonly byzCoinID: ID,
         readonly roster: Roster,
-        // TODO used only when registering, better provide them via URL during
-        // initial deploy; that's also why it's optional
-        readonly adminDarcID?: ID,
-        readonly ephemeral?: ID,
+        readonly ltsID: ID,
     ) {}
 }

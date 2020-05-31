@@ -45,15 +45,16 @@ export class DialogTransactionComponent<T> implements OnInit {
         const last = this.bcs.bc.latest.index;
         this.ub = (await this.bcs.bc.getNewBlocks()).pipe(
             map((block) => block.index),
-            startWith(last - 3, last - 2, last - 1, last),
+            startWith(last - 3, last - 2, last - 1),
         ).subscribe((nb) => this.updateBlocks(nb));
     }
 
     updateBlocks(index: number) {
-        if (this.blocks.length === 3) {
+        const start = this.blocks.length === 3;
+        this.addBlock(index);
+        if (start) {
             this.startTransactions();
         }
-        this.addBlock(index);
     }
 
     async startTransactions() {
@@ -101,7 +102,7 @@ export class DialogTransactionComponent<T> implements OnInit {
         const txt = this.renderer.createText(text);
         this.transaction.appendChild(txt);
         this.main.nativeElement.appendChild(this.transaction);
-        this.transaction.classList.add('transactionBuilder.ts');
+        this.transaction.classList.add('transaction');
         this.transaction.classList.add('tx-send');
     }
 

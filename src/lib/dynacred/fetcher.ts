@@ -1,9 +1,9 @@
-import { BehaviorSubject, of } from "rxjs";
-import { catchError, flatMap, map, mergeAll, tap } from "rxjs/operators";
+import {BehaviorSubject, of} from "rxjs";
+import {catchError, flatMap, map, mergeAll} from "rxjs/operators";
 import URL from "url-parse";
 
-import { Log } from "@c4dt/cothority";
-import { ByzCoinRPC, Instance, InstanceID, IStorage, Proof } from "@c4dt/cothority/byzcoin";
+import {Log} from "@c4dt/cothority";
+import {ByzCoinRPC, Instance, InstanceID, IStorage, Proof} from "@c4dt/cothority/byzcoin";
 import {
     Coin,
     CoinInstance,
@@ -11,20 +11,20 @@ import {
     CredentialStruct,
     SpawnerInstance,
 } from "@c4dt/cothority/byzcoin/contracts";
-import { Darc, IdentityDarc, IdentityWrapper } from "@c4dt/cothority/darc";
+import {Darc, IdentityDarc, IdentityWrapper} from "@c4dt/cothority/darc";
 
-import { ABActionsBS, ABContactsBS, ABGroupsBS, ActionBS, AddressBook } from "./addressBook";
-import { CoinBS } from "./byzcoin";
-import { DarcBS, DarcsBS } from "./byzcoin";
-import { CredentialSignerBS, CSTypesBS } from "./credentialSignerBS";
-import {
-    CredentialInstanceMapBS,
-    CredentialPublic,
-    CredentialStructBS,
-} from "./credentialStructBS";
-import { KeyPair } from "./keypair";
-import { ConvertBS, ObservableToBS } from "./observableUtils";
-import { User } from "./user";
+import {ABActionsBS, ABContactsBS, ABGroupsBS, ActionBS, AddressBook} from "./addressBook";
+import {CoinBS, DarcBS, DarcsBS} from "./byzcoin";
+import {CredentialSignerBS, CSTypesBS} from "./credentialSignerBS";
+import {CredentialInstanceMapBS, CredentialPublic, CredentialStructBS,} from "./credentialStructBS";
+import {KeyPair} from "./keypair";
+import {ConvertBS, ObservableToBS} from "./observableUtils";
+import {User} from "./user";
+import {CreateLTSReply, LongTermSecret, LtsInstanceInfo, OnChainSecretRPC} from "@c4dt/cothority/calypso";
+import {RosterWSConnection} from "@c4dt/cothority/network";
+import {registerMessage} from "@c4dt/cothority/protobuf";
+import {Message} from "protobufjs";
+import {Calypso} from "@c4dt/dynacred-c4dt/calypso";
 
 /**
  * Fetcher implements convenience methods to get instances needed for a credential.
@@ -68,9 +68,17 @@ export class Fetcher {
         const credSignerBS = await this.retrieveCredentialSignerBS(credStructBS);
         Log.lvl3("getting address book");
         const addressBook = await this.retrieveAddressBook(credStructBS.credPublic);
+        const ltsID = credStructBS.credConfig.ltsID.getValue();
+        let cal: Calypso | undefined;
+        if (ltsID && ltsID.length === 32) {
+            Log.llvl3("getting lts");
+            const lts = await this.retrieveLTS(ltsID);
+            cal = new Calypso(lts, credSignerBS.getValue().getBaseID(),
+                credStructBS.credCalypso);
+        }
         const user = new User(
             this.bc, this.db, kpp, dbBase, credStructBS, spawnerInstanceBS,
-            coinBS, credSignerBS, addressBook,
+            coinBS, credSignerBS, addressBook, cal
         );
         await user.save();
         return user;
@@ -210,7 +218,6 @@ export class Fetcher {
         // Need to verify against Buffer here, which is the defined type of InstanceID.
         // Else typescript complains....
         if (Buffer.isBuffer(darcID)) {
-            Log.print("making behaviorSubject");
             darcID = new BehaviorSubject(darcID);
         }
         const instObs = darcID.pipe(
@@ -221,7 +228,7 @@ export class Fetcher {
                 return of(undefined as Proof);
             }),
             map((inst) => (inst && inst.value && inst.value.length > 0) ?
-              Darc.decode(inst.value) : undefined),
+                Darc.decode(inst.value) : undefined),
         );
         const bsDarc = await ObservableToBS(instObs);
         if (bsDarc.getValue() === undefined) {
@@ -235,4 +242,29 @@ export class Fetcher {
         const credDarc = await this.retrieveDarcBS(credDarcID);
         return IdentityWrapper.fromString(credDarc.getValue().rules.getRule(Darc.ruleSign).getIdentities()[0]).darc;
     }
+
+    async retrieveLTS(ltsid: InstanceID): Promise<LongTermSecret> {
+        const instBS = await this.bc.instanceObservable(ltsid);
+        const ltsInfo = LtsInstanceInfo.decode(instBS.getValue().value);
+        const conn = new RosterWSConnection(ltsInfo.roster, OnChainSecretRPC.serviceID);
+        const reply = await conn.send<CreateLTSReply>(new GetLTSReply({ltsid}), CreateLTSReply);
+        return new LongTermSecret(this.bc, ltsid, reply.X, ltsInfo.roster);
+    }
 }
+
+/**
+ * GetLTSReply will return a stored LTS entry.
+ */
+export class GetLTSReply extends Message<GetLTSReply> {
+
+    readonly ltsid: InstanceID;
+
+    /**
+     * @see README#Message classes
+     */
+    static register() {
+        registerMessage("GetLTSReply", GetLTSReply);
+    }
+}
+
+GetLTSReply.register();

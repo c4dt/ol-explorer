@@ -1,5 +1,13 @@
-<h1>Handson console</h1>
+<h1>Hands-on console</h1>
 
 <p>Coins: {{(user.coinBS | async).value}}</p>
+<p>Signer darc:</p>
+<!--<div [innerHTML]="darcToHtml(user.credSignerBS | async)"></div>-->
+
+<button mat-raised-button (click)="buttonSendCoin()">Send Coin</button>
+<button mat-raised-button (click)="buttonUpdateLTS()">Update LTS</button>
+<button mat-raised-button (click)="buttonCreateWrite('test', 'some text')">Create Calypso-Write</button>
+<button mat-raised-button (click)="buttonCreateRead()">Read Calypso</button>
+
 <p>Here you see the output of what you're writing in the handson.component.ts:</p>
 <pre>{{logLines}}</pre>
