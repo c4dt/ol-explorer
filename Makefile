@@ -4,4 +4,4 @@ deps:
 	npm ci
 
 serve:
-	npx ng serve --disable-host-check --aot
+	npx ng serve --disable-host-check

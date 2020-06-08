@@ -6,11 +6,11 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import Log from '@c4dt/cothority/log';
+import Log from '@dedis/cothority/log';
 
-import { IUpdateCredential } from '@c4dt/dynacred-c4dt';
+import { IUpdateCredential } from '@c4dt/dynacred';
 
-import { UserService } from '../app/user.service';
+import { UserService } from 'src/lib/user.service';
 import { DialogTransactionComponent } from './dialog-transaction';
 
 // Progress type to be used in showTransactions.

@@ -1,6 +1,5 @@
-import {Component, Inject} from "@angular/core";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Log} from "@c4dt/cothority";
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 interface IInput {
     title: string;
@@ -8,8 +7,8 @@ interface IInput {
 }
 
 @Component({
-    selector: "dialog-handson-input",
-    templateUrl: "input.html"
+    selector: 'dialog-handson-input',
+    templateUrl: 'input.html'
 })
 export class HandsonInputComponent {
     result: string;

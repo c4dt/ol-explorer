@@ -3,18 +3,18 @@
         <div fxLayout="row" fxFlex="1 1 100%" fxLayoutAlign="center">
             <div fxFlex="90%" fxFlexOffset="0">
                 <h1 class="center">Loading user</h1>
-                <br />
+                <br/>
                 <div class="progress-box">
                     <div class="progress-text">
                         <div
-                            [style.width.%]="percentage"
-                            class="progress-bar"
+                                [style.width.%]="percentage"
+                                class="progress-bar"
                         ></div>
                         {{ text }}
                     </div>
                 </div>
 
-                <pre class="progress-log">{{ log }}</pre>
+                <pre class="progress-log">{{ startupLog }}</pre>
             </div>
         </div>
     </div>
@@ -27,12 +27,52 @@
                 <app-bcviewer></app-bcviewer>
             </div>
             <div fxFlex="1 0 9em" fxLayoutAlign="center end">
-                Version<br />{{ version }}
+                Version<br/>{{ version }}
             </div>
         </div>
         <div fxLayout="row" fxFlex="1 1 100%" fxLayoutAlign="center">
             <div fxFlex="90%" fxFlexOffset="0">
-                <router-outlet></router-outlet>
+                <h1>Hands-on console</h1>
+
+                <span *ngIf="bcs.user === undefined">
+                    <button mat-raised-button (click)="buttonPrintInstance()">Print Instance</button>
+                    <button mat-raised-button (click)="buttonPrintBlock()">Print Block</button>
+                    <button mat-raised-button (click)="buttonAttachUser()">Attach user</button>
+                    <p>Currently there is no user stored in here. If you want to send transactions to the blockchain,
+                    you need to go to
+                        <a target="_" href="https://demo.c4dt.org/omniledger/admin/devices">Devices</a>, create a
+                    new device, and copy the URL of the new device in the dialog of the <strong>Attach user</strong>
+                        button.</p>
+                </span>
+
+                <span *ngIf="bcs.user !== undefined">
+                    <p>Hello {{bcs.user.credStructBS.credPublic.alias|async}}, here some information about your
+                        account:</p>
+                    <ul>
+                        <li>CredentialID: {{bcs.user.credStructBS.id.toString('hex')}}</li>
+                        <li>Coins: {{(bcs.user.coinBS | async).value}}</li>
+                        <li>Signer darc ID: {{bcs.user.credSignerBS.getValue().getBaseID().toString('hex')}}</li>
+                    </ul>
+
+                    <button mat-raised-button (click)="buttonPrintInstance()">Print Instance</button>
+                    <button mat-raised-button (click)="buttonPrintBlock()">Print Block</button>
+                    <button mat-raised-button (click)="buttonCreateWrite()">Create Calypso-Write</button>
+                    <button mat-raised-button (click)="buttonCreateRead()">Read Calypso</button>
+                    <button mat-raised-button (click)="buttonSendCoin()">Send Coin</button>
+                    <button mat-raised-button (click)="buttonCreateValue()">Create Value</button>
+                    <button mat-raised-button (click)="buttonUpdateValue()">Update Value</button>
+                    <button mat-raised-button (click)="buttonUpdateLTS()">Update LTS</button>
+                </span>
+
+                <div *ngIf="!stackblitz">
+                    <p>
+                    If you want to dig deeper into the structures, try
+                    <a href="https://stackblitz.com/github/c4dt/ol-explorer">Stackblitz</a>.
+                    </p>
+                </div>
+
+                <p>Here you see the output of what you're writing in the handson.component.ts:</p>
+                <pre>{{logLines}}</pre>
             </div>
         </div>
     </div>

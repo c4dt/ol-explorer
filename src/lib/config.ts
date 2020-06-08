@@ -1,45 +1,17 @@
-import { Roster } from "@c4dt/cothority/network/proto";
+import { Roster } from '@dedis/cothority/network/proto';
 
-import toml from "toml";
+import toml from 'toml';
 
 type ID = Buffer;
 
 export class Config {
-    static fromTOML(raw: string): Config {
-        const parsed = toml.parse(raw);
 
-        const tryToGetField = <T>(name: string, func: (_: string) => T): T | undefined => {
-            if (!(name in parsed)) {
-                return undefined;
-            }
-            return func(parsed[name]);
-        };
+    private constructor(
+        readonly byzCoinID: ID,
+        readonly roster: Roster,
+        readonly ltsID: ID,
+    ) {}
 
-        const getField = <T>(name: string, func: (_: string) => T): T => {
-            if (!(name in parsed)) {
-                throw Error(`field "${name}" not found in config`);
-            }
-            return func(parsed[name]);
-        };
-
-        const asID = (field: any): ID => {
-            if (typeof field !== "string") {
-                throw Error("is not a string");
-            }
-            if (!(/[a-f0-9]{64}/).test(field)) {
-                throw Error("is not of correct format");
-            }
-
-            return Buffer.from(field, "hex");
-        };
-
-        return new Config(
-            getField("ByzCoinID", asID),
-            Roster.fromTOML(raw),
-            getField("LTSID", asID)
-        );
-    }
-    
     static dedis_config = `
 ByzCoinID = "9cc36071ccb902a1de7e0d21a2c176d73894b1cf88ae4cc2ba4c95cd76f474f3"
 LTSID = "0bf81dc36e60be3db113016400f7942e54769ceb8e9d93cafff08548e181a4f9"
@@ -128,10 +100,38 @@ LTSID = "0bf81dc36e60be3db113016400f7942e54769ceb8e9d93cafff08548e181a4f9"
       Public = "69088f9df0396cfd296eeeb060bc84d807f3f2cf3b02b8eafd953f30e9e979a203fd11035e9f1fca2662383841c3c630ee3554150ec2b5fdb50819a22a2682dd341f0424fec4eafb8a17041b939ef18eabdd8c38e2f057619a541c506bbae5755265ae6b9156690b7a2907ca0ec6394d79363d5492aa2c9512e3fba882aad358"
       Suite = "bn256.adapter"
 `;
+    static fromTOML(raw: string): Config {
+        const parsed = toml.parse(raw);
 
-    private constructor(
-        readonly byzCoinID: ID,
-        readonly roster: Roster,
-        readonly ltsID: ID,
-    ) {}
+        const tryToGetField = <T>(name: string, func: (_: string) => T): T | undefined => {
+            if (!(name in parsed)) {
+                return undefined;
+            }
+            return func(parsed[name]);
+        };
+
+        const getField = <T>(name: string, func: (_: string) => T): T => {
+            if (!(name in parsed)) {
+                throw Error(`field "${name}" not found in config`);
+            }
+            return func(parsed[name]);
+        };
+
+        const asID = (field: any): ID => {
+            if (typeof field !== 'string') {
+                throw Error('is not a string');
+            }
+            if (!(/[a-f0-9]{64}/).test(field)) {
+                throw Error('is not of correct format');
+            }
+
+            return Buffer.from(field, 'hex');
+        };
+
+        return new Config(
+            getField('ByzCoinID', asID),
+            Roster.fromTOML(raw),
+            getField('LTSID', asID)
+        );
+    }
 }

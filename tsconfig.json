@@ -14,21 +14,21 @@
     "importHelpers": true,
     "target": "es5",
     "paths": {
-      "@c4dt/dynacred-c4dt": [
+      "@c4dt/dynacred": [
         "src/lib/dynacred",
-        "node_modules/@c4dt/dynacred-c4dt"
+        "node_modules/@c4dt/dynacred"
       ],
-      "@c4dt/dynacred-c4dt/*": [
+      "@c4dt/dynacred/*": [
         "src/lib/dynacred/*",
-        "node_modules/@c4dt/dynacred-c4dt/*"
+        "node_modules/@c4dt/dynacred/*"
       ],
-      "@c4dt/cothority": [
+      "@dedis/cothority": [
         "src/lib/cothority",
-        "node_modules/@c4dt/cothority"
+        "node_modules/@dedis/cothority"
       ],
-      "@c4dt/cothority/*": [
+      "@dedis/cothority/*": [
         "src/lib/cothority/*",
-        "node_modules/@c4dt/cothority/*"
+        "node_modules/@dedis/cothority/*"
       ],
       "@dedis/kyber": [
         "src/lib/kyber",
@@ -38,6 +38,12 @@
         "src/lib/kyber/*",
         "node_modules/@dedis/kyber/*"
       ],
+      "stream": [
+        "node_modules/readable-stream"
+      ],
+      "crypto": [
+        "node_modules/crypto-browserify"
+      ]
     },
     "lib": [
       "es2018",

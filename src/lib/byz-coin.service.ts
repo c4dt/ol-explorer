@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ByzCoinRPC, IStorage } from '@c4dt/cothority/byzcoin';
-import Log from '@c4dt/cothority/log';
-import { RosterWSConnection } from '@c4dt/cothority/network';
-import { SkipBlock, SkipchainRPC } from '@c4dt/cothority/skipchain';
-import { StatusRequest, StatusResponse } from '@c4dt/cothority/status/proto';
-import StatusRPC from '@c4dt/cothority/status/status-rpc';
+import { ByzCoinRPC, IStorage } from '@dedis/cothority/byzcoin';
+import Log from '@dedis/cothority/log';
+import { RosterWSConnection } from '@dedis/cothority/network';
+import { SkipBlock, SkipchainRPC } from '@dedis/cothority/skipchain';
+import { StatusRequest, StatusResponse } from '@dedis/cothority/status/proto';
+import StatusRPC from '@dedis/cothority/status/status-rpc';
 import Dexie from 'dexie';
-import { Fetcher, User } from '@c4dt/dynacred-c4dt';
-import { Config } from '../lib/config';
+import { Fetcher, User } from '@c4dt/dynacred';
+import { Config } from 'src/lib/config';
+import {IdentityWrapper} from '@dedis/cothority/darc';
 
 @Injectable({
     providedIn: 'root',
@@ -76,8 +77,23 @@ export class ByzCoinService extends Fetcher {
         return false;
     }
 
-    async loadUser(): Promise<void> {
-        this.user = await this.retrieveUserByDB();
+    async loadUser(logger: (msg: string, percentage: number) => void): Promise<void> {
+        logger('Checking if user exists', 20);
+        if (!(await this.hasUser())) {
+            Log.print('no user');
+        } else {
+                logger('Loading data', 80);
+                this.user = await this.retrieveUserByDB();
+                const signerDarc = await this.user.identityDarcSigner;
+                const rules = await this.bc.checkAuthorization(this.bc.genesisID, signerDarc.id,
+                    IdentityWrapper.fromIdentity(this.user.kiSigner));
+                if (rules.length === 0) {
+                    await this.user.clearDB();
+                    throw new Error( 'Sorry, but this device has been revoked.' +
+                        ' If you want to use it again, you\'ll have to re-activate it.');
+                }
+        }
+        logger('Done', 100);
     }
 
     async migrate(): Promise<void> {

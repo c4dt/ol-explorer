@@ -3,16 +3,18 @@
     <p>
         <mat-form-field class="width100">
             <mat-label>{{data.input}}</mat-label>
-            <input matInput [(ngModel)]="result"/>
+            <input matInput [(ngModel)]="result" cdkFocusInitial
+                   (keyup.enter)="dialogRef.close(this.result)"/>
         </mat-form-field>
     </p>
     <p>
-        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button mat-dialog-close
+        type="button">Cancel</button>
         <button
                 mat-raised-button
                 color="primary"
                 [mat-dialog-close]="result"
-                cdkFocusInitial
+                type="submit"
         >
             OK
         </button>
