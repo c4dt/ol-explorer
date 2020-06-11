@@ -3,9 +3,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Log} from '@dedis/cothority';
 
-import {ByzCoinService} from 'src/lib/byz-coin.service';
-import {HandsonHelpers} from 'src/app/handson-helpers';
-import {PrettyPrintElement, PrettyPrintInstance} from 'src/lib/pretty-print';
+import {ByzCoinService} from '../lib/byz-coin.service';
+import {HandsonHelpers} from './handson-helpers';
+import {PrettyPrintElement, PrettyPrintInstance} from '../lib/pretty-print';
 import {randomBytes} from "crypto-browserify";
 
 @Component({

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-// import { ExplorerComponent } from 'src/app/explorer/explorer.component';
+// import { ExplorerComponent } from './explorer/explorer.component';
 
 const routes: Routes = [
     // {

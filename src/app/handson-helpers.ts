@@ -1,4 +1,4 @@
-import {ByzCoinService} from 'src/lib/byz-coin.service';
+import {ByzCoinService} from '../lib/byz-coin.service';
 import {MatDialog} from '@angular/material/dialog';
 import {Log} from '@dedis/cothority';
 import {Calypso, SpawnerTransactionBuilder} from '@c4dt/dynacred';
@@ -8,7 +8,7 @@ import {Coin} from '@dedis/cothority/byzcoin/contracts';
 import ValueInstance from '@dedis/cothority/byzcoin/contracts/value-instance';
 import * as Long from 'long';
 import {SkipBlock} from '@dedis/cothority/skipchain';
-import {PrettyPrint, PrettyPrintElement} from 'src/lib/pretty-print';
+import {PrettyPrint, PrettyPrintElement} from '../lib/pretty-print';
 import {Darc, IdentityDarc} from "@dedis/cothority/darc";
 
 export class HandsonHelpers {

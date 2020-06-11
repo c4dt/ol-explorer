@@ -13,7 +13,7 @@ import CredentialsInstance, {CredentialStruct} from '@dedis/cothority/personhood
 import {SkipBlock} from '@dedis/cothority/skipchain';
 import SkipchainRPC from '@dedis/cothority/skipchain/skipchain-rpc';
 import {Fetcher} from '@c4dt/dynacred';
-import {ByzCoinService} from 'src/lib/byz-coin.service';
+import {ByzCoinService} from '../../lib/byz-coin.service';
 import {Log} from "@dedis/cothority";
 
 @Component({
