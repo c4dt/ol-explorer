@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ol-training": {
+    "ol-explorer": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ol-training",
+            "outputPath": "dist/ol-explorer",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ol-training:build"
+            "browserTarget": "ol-explorer:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ol-training:build:production"
+              "browserTarget": "ol-explorer:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ol-training:build"
+            "browserTarget": "ol-explorer:build"
           }
         },
         "test": {
@@ -110,18 +110,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ol-training:serve"
+            "devServerTarget": "ol-explorer:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ol-training:serve:production"
+              "devServerTarget": "ol-explorer:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "ol-training",
+  "defaultProject": "ol-explorer",
   "cli": {
     "analytics": "b5d40341-07a4-4ca4-8f3b-51af44456b01"
   },
