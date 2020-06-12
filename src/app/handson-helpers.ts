@@ -24,7 +24,7 @@ export class HandsonHelpers {
         public bcs: ByzCoinService,
         public dialog: MatDialog,
     ) {
-        this.stackblitz = window.location.hostname.includes("stackblitz.com");
+        this.stackblitz = window.location.hostname.includes("stackblitz.");
     }
 
     log(...args: any) {
@@ -40,7 +40,7 @@ export class HandsonHelpers {
         this.logLines = `${time} -> ${title}\n${Log.joinArgs(bufs)}\n\n` + this.logLines;
     }
 
-    logPP(pp: PrettyPrint){
+    logPP(pp: PrettyPrint) {
         this.log(pp.title, pp.join());
     }
 
@@ -146,7 +146,8 @@ export class HandsonHelpers {
         this.showError(async () => {
             const idStr = await this.getInput('Print instance', 'ID');
             try {
-                const id = Buffer.from(idStr, 'hex');
+                const id = idStr && idStr.length > 0 ? Buffer.from(idStr, 'hex') :
+                    Buffer.alloc(32);
                 const pr = (await this.bcs.bc.instanceObservable(id)).getValue();
                 this.logPP(PrettyPrintElement.proof(pr));
             } catch (e) {
@@ -172,11 +173,11 @@ export class HandsonHelpers {
     async buttonCreateValue() {
         this.showError(async () => {
             const val = await this.getInput('Value for instance', 'Text');
-            if (val === undefined || val === ""){
+            if (val === undefined || val === "") {
                 return;
             }
             const did = await this.getInput('Darc-baseID for protection', 'BaseID');
-            if (did === "" || Buffer.from(did, 'hex').length != 32){
+            if (did === "" || Buffer.from(did, 'hex').length != 32) {
                 throw new Error("not a valid ID");
             }
             await this.doTx((tx) => {

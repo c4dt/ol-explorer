@@ -2,7 +2,7 @@ import {SkipBlock} from '@dedis/cothority/skipchain';
 import {DataBody, DataHeader} from '@dedis/cothority/byzcoin/proto';
 import ClientTransaction, {Argument, Instruction} from '@dedis/cothority/byzcoin/client-transaction';
 import {CredentialStructBS} from '@c4dt/dynacred';
-import {Instance, Proof} from '@dedis/cothority/byzcoin';
+import {ChainConfig, Instance, Proof} from '@dedis/cothority/byzcoin';
 import {
     Coin,
     CoinInstance,
@@ -10,12 +10,12 @@ import {
     CredentialStruct,
     DarcInstance
 } from '@dedis/cothority/byzcoin/contracts';
-import {Darc} from '@dedis/cothority/darc';
+import {Darc, Rule} from '@dedis/cothority/darc';
 import {CalypsoReadInstance, CalypsoWriteInstance, Read, Write} from '@dedis/cothority/calypso';
 import ValueInstance from '@dedis/cothority/byzcoin/contracts/value-instance';
 import {BehaviorSubject} from 'rxjs';
 import {AddressBook} from '@c4dt/dynacred';
-import Log from "@dedis/cothority/log";
+import {ByzCoinService} from "src/lib/byz-coin.service";
 
 export class PrettyPrint implements PrettyPrinter {
     constructor(public title: string, public sm: StringMap) {
@@ -213,6 +213,35 @@ export class PrettyPrintInstance extends PrettyPrint {
         });
     }
 
+    static async recurseRule(bcs: ByzCoinService, r: Rule, dids: Buffer[] = []): Promise<PrettyPrint>{
+        const sm: StringMap = {};
+        for (const [i, id] of r.getIdentities().entries()){
+            if (id.startsWith('darc:')){
+                const did = Buffer.from(id.slice(5), 'hex');
+                if (dids.find((d) => d.equals(did))){
+                    sm[i.toString()] = 'Cycles to ' + id;
+                } else {
+                    dids.push(did);
+                    const d = await bcs.retrieveDarcBS(did);
+                    const pp = await this.recurseRule(bcs, d.getValue().rules.getRule(Darc.ruleSign),
+                        dids.map((did) => did));
+                    sm[i.toString() + ' ' + d.getValue().description + ' ' + id] = pp.sm;
+                }
+            } else {
+                sm[i.toString()] = id;
+            }
+        }
+        return new PrettyPrint('Darc', sm);
+    }
+
+    static config(cfg: ChainConfig): PrettyPrintElement {
+        return new PrettyPrint('ChainConfig', {
+            BlockInterval: cfg.blockInterval.div(1e6).toString() + ' ms',
+            MaxBlockSize: cfg.maxBlockSize.toString() + ' bytes',
+            Roster: cfg.roster.list.map((l) => `${l.description}: ${l.address}`)
+        })
+    }
+
     static switch(inst: Instance): PrettyPrintInstance {
         switch (inst.contractID) {
             case DarcInstance.contractID:
@@ -227,6 +256,8 @@ export class PrettyPrintInstance extends PrettyPrint {
                 return this.coin(Coin.decode(inst.data));
             case CredentialsInstance.contractID:
                 return this.credStruct(CredentialStruct.decode(inst.data));
+            case 'config':
+                return this.config(ChainConfig.decode(inst.data));
             default:
                 throw new Error('Don\'t know this instance');
         }

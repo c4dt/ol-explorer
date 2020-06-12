@@ -6,7 +6,7 @@ import {Log} from '@dedis/cothority';
 import {ByzCoinService} from '../lib/byz-coin.service';
 import {HandsonHelpers} from './handson-helpers';
 import {PrettyPrintElement, PrettyPrintInstance} from '../lib/pretty-print';
-import {randomBytes} from "crypto-browserify";
+import {Darc} from "@dedis/cothority/darc";
 
 @Component({
     selector: 'app-root',
@@ -28,8 +28,6 @@ export class AppComponent extends HandsonHelpers implements OnInit {
 
     async ngOnInit() {
         await this.init();
-
-        Log.print(randomBytes(32));
 
         return this.showError(async () => {
             this.logPP(PrettyPrintElement.skipBlock(this.bcs.bc.latest));
