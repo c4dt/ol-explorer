@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
     "@c4dt/dynacred": "^2.0.6",
-    "@dedis/cothority": "^3.4.6",
+    "@dedis/cothority": "^3.4.7",
     "bn.js": "^5.1.2",
     "browserify-sign": "^4.0.0",
     "crypto-browserify": "^3.12.0",
