@@ -15,7 +15,7 @@ import {CalypsoReadInstance, CalypsoWriteInstance, Read, Write} from '@dedis/cot
 import ValueInstance from '@dedis/cothority/byzcoin/contracts/value-instance';
 import {BehaviorSubject} from 'rxjs';
 import {AddressBook} from '@c4dt/dynacred';
-import {ByzCoinService} from "src/lib/byz-coin.service";
+import {ByzCoinService} from "./byz-coin.service";
 
 export class PrettyPrint implements PrettyPrinter {
     constructor(public title: string, public sm: StringMap) {
