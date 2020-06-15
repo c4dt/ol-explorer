@@ -64,7 +64,7 @@ export class HandsonHelpers {
 
         } catch (e) {
             Log.catch(e, 'failed loading user');
-            return showDialogOKC(this.dialog, 'Error while loading', e)
+            await showDialogOKC(this.dialog, 'Error while loading', e)
         }
         this.loading = false;
     }

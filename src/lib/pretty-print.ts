@@ -140,12 +140,12 @@ export class PrettyPrintInstance extends PrettyPrint {
     }
 
     static calypsoWrite(wr: Write): PrettyPrintInstance {
-        const sm = {
+        const sm: StringMap = {
             ExtraData: wr.extradata,
             LTSID: wr.ltsid,
         };
         if (wr.cost) {
-            sm.Cost = wr.cost.value;
+            sm.Cost = wr.cost.value.toString();
         }
         return new PrettyPrintInstance(`CalypsoWrite`, sm);
     }
