@@ -6,7 +6,7 @@ import {Log} from '@dedis/cothority';
 import {ByzCoinService} from '../lib/byz-coin.service';
 import {HandsonHelpers} from './handson-helpers';
 import {PrettyPrintElement, PrettyPrintInstance} from '../lib/pretty-print';
-import {Darc} from "@dedis/cothority/darc";
+import {Darc} from '@dedis/cothority/darc';
 
 @Component({
     selector: 'app-root',

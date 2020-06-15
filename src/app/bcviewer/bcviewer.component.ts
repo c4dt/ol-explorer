@@ -14,7 +14,7 @@ import {SkipBlock} from '@dedis/cothority/skipchain';
 import SkipchainRPC from '@dedis/cothority/skipchain/skipchain-rpc';
 import {Fetcher} from '@c4dt/dynacred';
 import {ByzCoinService} from '../../lib/byz-coin.service';
-import {Log} from "@dedis/cothority";
+import {Log} from '@dedis/cothority';
 
 @Component({
     selector: 'app-bcviewer',
@@ -155,14 +155,14 @@ class InstStr {
                     is.description = 'Genesis Configuration';
                     break;
                 case CredentialsInstance.contractID:
-                    is.description = "Unknown credential";
+                    is.description = 'Unknown credential';
                     try {
                         const cred = await bc.retrieveCredentialStructBS(inst.instanceID);
                         if (cred) {
                             is.description = `Credential '${cred.credPublic.alias.getValue()}'`;
                         }
                     } catch (e) {
-                        is.description = "Error while retrieving credential";
+                        is.description = 'Error while retrieving credential';
                     }
             }
         }

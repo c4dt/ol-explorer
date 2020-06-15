@@ -9,7 +9,7 @@ import ValueInstance from '@dedis/cothority/byzcoin/contracts/value-instance';
 import * as Long from 'long';
 import {SkipBlock} from '@dedis/cothority/skipchain';
 import {PrettyPrint, PrettyPrintElement} from '../lib/pretty-print';
-import {Darc, IdentityDarc} from "@dedis/cothority/darc";
+import {Darc, IdentityDarc} from '@dedis/cothority/darc';
 
 export class HandsonHelpers {
     logLines = '';
@@ -24,7 +24,7 @@ export class HandsonHelpers {
         public bcs: ByzCoinService,
         public dialog: MatDialog,
     ) {
-        this.stackblitz = window.location.hostname.includes("stackblitz.");
+        this.stackblitz = window.location.hostname.includes('stackblitz.');
     }
 
     log(...args: any) {
@@ -163,7 +163,7 @@ export class HandsonHelpers {
             if (sbID.length === 64) {
                 sb = await this.bcs.skipchain.getSkipBlock(Buffer.from(sbID, 'hex'));
             } else {
-                const reply = await this.bcs.skipchain.getSkipBlockByIndex(this.bcs.bc.genesisID, parseInt(sbID));
+                const reply = await this.bcs.skipchain.getSkipBlockByIndex(this.bcs.bc.genesisID, parseInt(sbID, 10));
                 sb = reply.skipblock;
             }
             this.logPP(PrettyPrintElement.skipBlock(sb));
@@ -173,16 +173,16 @@ export class HandsonHelpers {
     async buttonCreateValue() {
         this.showError(async () => {
             const val = await this.getInput('Value for instance', 'Text');
-            if (val === undefined || val === "") {
+            if (val === undefined || val === '') {
                 return;
             }
             const did = await this.getInput('Darc-baseID for protection', 'BaseID');
-            if (did === "" || Buffer.from(did, 'hex').length != 32) {
-                throw new Error("not a valid ID");
+            if (did === '' || Buffer.from(did, 'hex').length !== 32) {
+                throw new Error('not a valid ID');
             }
             await this.doTx((tx) => {
                 const id = new IdentityDarc({id: Buffer.from(did, 'hex')});
-                const d = Darc.createBasic([id], [id], Buffer.from("Value Darc"),
+                const d = Darc.createBasic([id], [id], Buffer.from('Value Darc'),
                     [`invoke:${ValueInstance.contractID}.${ValueInstance.commandUpdate}`]);
                 tx.spawnDarc(d);
                 const valID = tx.spawnValue(d.getBaseID(), Buffer.from(val));

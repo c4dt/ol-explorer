@@ -12,7 +12,7 @@ export class Config {
         readonly ltsID: ID,
     ) {}
 
-    static dedis_config = `
+    static dedisConfig = `
 ByzCoinID = "9cc36071ccb902a1de7e0d21a2c176d73894b1cf88ae4cc2ba4c95cd76f474f3"
 LTSID = "0bf81dc36e60be3db113016400f7942e54769ceb8e9d93cafff08548e181a4f9"
 

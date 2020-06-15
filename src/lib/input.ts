@@ -7,7 +7,7 @@ interface IInput {
 }
 
 @Component({
-    selector: 'dialog-handson-input',
+    selector: 'app-dialog-handson-input',
     templateUrl: 'input.html'
 })
 export class HandsonInputComponent {

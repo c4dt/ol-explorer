@@ -15,7 +15,7 @@ import {CalypsoReadInstance, CalypsoWriteInstance, Read, Write} from '@dedis/cot
 import ValueInstance from '@dedis/cothority/byzcoin/contracts/value-instance';
 import {BehaviorSubject} from 'rxjs';
 import {AddressBook} from '@c4dt/dynacred';
-import {ByzCoinService} from "./byz-coin.service";
+import {ByzCoinService} from './byz-coin.service';
 
 export class PrettyPrint implements PrettyPrinter {
     constructor(public title: string, public sm: StringMap) {
@@ -145,7 +145,7 @@ export class PrettyPrintInstance extends PrettyPrint {
             LTSID: wr.ltsid,
         };
         if (wr.cost) {
-            sm['Cost'] = wr.cost.value;
+            sm.Cost = wr.cost.value;
         }
         return new PrettyPrintInstance(`CalypsoWrite`, sm);
     }
@@ -224,7 +224,7 @@ export class PrettyPrintInstance extends PrettyPrint {
                     dids.push(did);
                     const d = await bcs.retrieveDarcBS(did);
                     const pp = await this.recurseRule(bcs, d.getValue().rules.getRule(Darc.ruleSign),
-                        dids.map((did) => did));
+                        dids.map((_did) => _did));
                     sm[i.toString() + ' ' + d.getValue().description + ' ' + id] = pp.sm;
                 }
             } else {
