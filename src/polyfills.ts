@@ -68,4 +68,5 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
     browser: true,
 };
 
-global.Buffer = global.Buffer || require('buffer').Buffer;
+// Not sure if this is really needed or not - at least stackblitz complains about re-declaration of 'Buffer'...
+// global.Buffer = global.Buffer || require('buffer').Buffer;
