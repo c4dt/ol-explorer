@@ -1,4 +1,10 @@
-# Ol-Explorer
+# Ol-Explorer - ARCHIVED
+
+You can run this webapp locally on your computer by following the
+instructions from the [ByzCoin](https://github.com/c4dt/byzcoin)
+project.
+
+## Description
 
 Different explorer exist now for OmniLedger.
 This one has as a goal a simple interface for programmers to deep-dive into the structures.
