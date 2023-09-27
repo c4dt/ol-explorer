@@ -30,7 +30,7 @@ export class ByzCoinService extends Fetcher {
 
     async loadConfig(logger: (msg: string, percentage: number) => void): Promise<void> {
         logger('Loading config', 0);
-        this.config = Config.fromTOML(Config.dedisConfig);
+        this.config = await Config.getConfig('assets/config.toml');
         logger('Pinging nodes', 10);
         this.conn = new RosterWSConnection(this.config.roster, StatusRPC.serviceName);
         this.conn.setParallel(this.config.roster.length);

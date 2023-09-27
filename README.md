@@ -1,4 +1,10 @@
-# Ol-Explorer
+# Ol-Explorer - ARCHIVED
+
+This project is intended to be run together with the [ByzCoin](https://github.com/c4dt/byzcoin) blockchain.
+To test it locally, we recommend that you follow the instructions for setting up the ByzCoin project,
+and choose "Go to the OL Explorer" in the application menu.
+
+## Description
 
 Different explorer exist now for OmniLedger.
 This one has as a goal a simple interface for programmers to deep-dive into the structures.
